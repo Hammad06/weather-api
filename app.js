@@ -1,4 +1,6 @@
-﻿require("dotenv").config();
+﻿//devhammad
+
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -24,3 +26,6 @@ mongoose
     console.error("MongoDB connection error:", err);
     process.exit(1);
   });
+
+
+
