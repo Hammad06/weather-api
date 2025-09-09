@@ -8,21 +8,21 @@ const auth = async (req, res, next) => {
   }
 
   try {
-    // Remove "Bearer " if present
+    // Remove "Bearer " prefix if it exists
     if (token.startsWith("Bearer ")) {
-      token = token.replace("Bearer ", "");
+      token = token.slice(7).trim();
     }
 
-    // Verify token
+    // Verify the JWT token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Find user from DB
+    // Find the user associated with this token
     const user = await User.findById(decoded.id).select("-password");
     if (!user) {
       return res.status(401).json({ message: "User not found, token invalid" });
     }
 
-    req.user = user; // attach to request
+    req.user = user; // Attach user to the request object
     next();
   } catch (err) {
     console.error("Auth error:", err.message);
